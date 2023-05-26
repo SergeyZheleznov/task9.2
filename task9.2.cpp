@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <numeric>
 
 class Fraction
 {
@@ -19,130 +20,56 @@ public:
 		denominator_ = denominator;
 	}
 
-	bool operator == (const Fraction& other)
-	{
-		return this->numerator_ == other.numerator_ && this->denominator_ == other.denominator_;
-	}
-	
 	Fraction operator + (const Fraction & other) {
-		Fraction temp;
-		temp.numerator_ = this->numerator_ * other.denominator_ + this->denominator_ * other.numerator_;
-		temp.denominator_ = this->denominator_ * other.denominator_;
-
-
-
-		float p = 0.0, q = 0.0;
-		for (int i = 1; i <= temp.numerator_ && i <= temp.denominator_; i++)
-		{
-
-			if (!(temp.numerator_ % i) && !(temp.denominator_ % i))
-			{
-				p = temp.numerator_ / i;
-				q = temp.denominator_ / i;
-			}
-		}
-		temp.numerator_ = p;
-		temp.denominator_ = q;
-		return temp;
+		this->numerator_ = this->numerator_ * other.denominator_ + this->denominator_ * other.numerator_;
+		this->denominator_ = this->denominator_ * other.denominator_;
+		return *this;
 	}
 	
 	Fraction operator - (const Fraction& other) {
-		Fraction temp;
-		temp.numerator_ = this->numerator_ * other.denominator_ - this->denominator_ * other.numerator_;
-		temp.denominator_ = this->denominator_ * other.denominator_;
-
-
-/*
-		float p = 0.0, q = 0.0;
-		for (int i = 1; i <= temp.numerator_ && i <= temp.denominator_; i++)
-		{
-
-			if (!(temp.numerator_ % i) && !(temp.denominator_ % i))
-			{
-				p = temp.numerator_ / i;
-				q = temp.denominator_ / i;
-			}
-		}
-		temp.numerator_ = p;
-		temp.denominator_ = q;*/
-		return temp;
+		this->numerator_ = this->numerator_ * other.denominator_ - this->denominator_ * other.numerator_;
+		this->denominator_ = this->denominator_ * other.denominator_;
+		return *this;
 	}
 
 	Fraction operator * (const Fraction& other) {
-		Fraction temp;
-		temp.numerator_ = this->numerator_ * other.numerator_;
-		temp.denominator_ = this->denominator_ * other.denominator_;
-
-		float p = 0.0, q = 0.0;
-		for (int i = 1; i <= temp.numerator_ && i <= temp.denominator_; i++)
-		{
-
-			if (!(temp.numerator_ % i) && !(temp.denominator_ % i))
-			{
-				p = temp.numerator_ / i;
-				q = temp.denominator_ / i;
-			}
-		}
-		temp.numerator_ = p;
-		temp.denominator_ = q;
-		return temp;
+		this->numerator_ = this->numerator_ * other.numerator_;
+		this->denominator_ = this->denominator_ * other.denominator_;
+		return *this;
 	}
 
 	Fraction operator / (const Fraction& other) {
-		Fraction temp;
-		temp.numerator_ = this->numerator_ * other.denominator_;
-		temp.denominator_ = this->denominator_ * other.numerator_;
-
-
-
-		float p = 0.0, q = 0.0;
-		for (int i = 1; i <= temp.numerator_ && i <= temp.denominator_; i++)
-		{
-
-			if (!(temp.numerator_ % i) && !(temp.denominator_ % i))
-			{
-				p = temp.numerator_ / i;
-				q = temp.denominator_ / i;
-			}
-		}
-		temp.numerator_ = p;
-		temp.denominator_ = q;
-		return temp;
+		this->numerator_ = this->numerator_ * other.denominator_;
+		this->denominator_ = this->denominator_ * other.numerator_;
+		return *this;
 	}
 
 	Fraction & operator ++()
 	{
 		this->numerator_ = numerator_ + denominator_;
 		this->denominator_;
-
 		return *this;
 	}
 
 	Fraction& operator ++(int)
 	{
-		
-		Fraction temp(*this);
 		this->numerator_ = numerator_ + denominator_;
 		this->denominator_;
-
-		return temp;
+		return *this;
 	}
 
 	Fraction& operator --()
 	{
 		this->numerator_ = numerator_ - denominator_;
 		this->denominator_;
-
 		return *this;
 	}
 
 	Fraction& operator --(int)
 	{
-		Fraction temp(*this);
 		this->numerator_ = numerator_ - denominator_;
 		this->denominator_;
-
-		return temp;
+		return *this;
 	}
 
 	void print()
@@ -187,45 +114,55 @@ int main()
 	std::cout << " + ";
 	f2.print();
 	std::cout << " = ";
+	Fraction temp = f1;
 	Fraction sum1 = f1 + f2;
 	sum1.print();
 	std::cout << std::endl;
+	f1 = temp;
 	
 	std::cout << "";
 	f1.print();
 	std::cout << " - ";
 	f2.print();
 	std::cout << " = ";
+	temp = f1;
 	Fraction minus1 = f1 - f2;
 	minus1.print();
 	std::cout << std::endl;
+	f1 = temp;
 
 	std::cout << "";
 	f1.print();
 	std::cout << " * ";
 	f2.print();
 	std::cout << " = ";
+	temp = f1;
 	Fraction  mul1= f1 * f2;
 	mul1.print();
 	std::cout << std::endl;
+	f1 = temp;
 
 	std::cout << "";
 	f1.print();
 	std::cout << " / ";
 	f2.print();
 	std::cout << " = ";
+	temp = f1;
 	Fraction  div1 = f1 / f2;
 	div1.print();
 	std::cout << std::endl;
+	f1 = temp;
 
 	std::cout << "++";
 	f1.print();
 	std::cout << " * ";
 	f2.print();
 	std::cout << " = ";
+	temp = f1;
 	Fraction  mul2 = ++f1 * f2;
 	mul2.print();
 	std::cout << std::endl;
+	f1 = temp;
 
 	std::cout << "Значение дроби 1 = ";
 	f1.print();
@@ -235,9 +172,11 @@ int main()
 	std::cout << " -- * ";
 	f2.print();
 	std::cout << " = ";
+	temp = f1;
 	Fraction  mul3 = --f1 * f2;
 	mul3.print();
 	std::cout << std::endl;
+	f1 = temp;
 
 	std::cout << "Значение дроби 1 = ";
 	f1.print();
